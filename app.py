@@ -13,6 +13,30 @@ QUESTIONS = [
     {"q": "Hành tinh gần Mặt trời nhất?", "a": ["A. Sao Kim", "B. Sao Thủy", "C. Sao Hỏa", "D. Trái Đất"], "c": "B. Sao Thủy"},
     {"q": "Tác giả Truyện Kiều?", "a": ["A. Nguyễn Khuyến", "B. Nguyễn Du", "C. Phan Bội Châu", "D. Hồ Xuân Hương"], "c": "B. Nguyễn Du"},
     {"q": "Đại dương lớn nhất?", "a": ["A. Ấn Độ Dương", "B. Đại Tây Dương", "C. Bắc Băng Dương", "D. Thái Bình Dương"], "c": "D. Thái Bình Dương"},
+
+    # --- CÂU ĐÚNG/SAI 1 ---
+    {
+        "q": "Trong các phát biểu sau, đâu là phát biểu ĐÚNG?",
+        "a": [
+            "A. Python là ngôn ngữ lập trình bậc thấp",
+            "B. Trái Đất có 2 Mặt Trăng",
+            "C. Nước sôi ở 100°C (điều kiện thường)",
+            "D. Con người không cần oxy để sống"
+        ],
+        "c": "C. Nước sôi ở 100°C (điều kiện thường)"
+    },
+
+    # --- CÂU ĐÚNG/SAI 2 ---
+    {
+        "q": "Trong các phát biểu sau, đâu là phát biểu SAI?",
+        "a": [
+            "A. 1 giờ = 60 phút",
+            "B. Cá voi là động vật có vú",
+            "C. Ánh sáng truyền chậm hơn âm thanh",
+            "D. Con người có 5 giác quan cơ bản"
+        ],
+        "c": "C. Ánh sáng truyền chậm hơn âm thanh"
+    },
 ]
 
 # --- LƯU ---
