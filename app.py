@@ -84,17 +84,17 @@ QUESTIONS_MULTI = [
      "c": ["A. Hình thành năm 2004", "C. Đc: 49 Phan Bội Châu"]},
 ]
 
-# 👉 GHÉP: 1 ĐÁP ÁN → NHIỀU ĐÁP ÁN
 QUESTIONS = random.sample(QUESTIONS_SINGLE, len(QUESTIONS_SINGLE)) + \
             random.sample(QUESTIONS_MULTI, len(QUESTIONS_MULTI))
 
 # ======================
-# 💾 LƯU
+# 💾 LƯU (THÊM LỚP)
 # ======================
-def save_result(name, score):
+def save_result(name, lop, score):
     df_new = pd.DataFrame({
         "Thời gian": [datetime.datetime.now().strftime("%d/%m/%Y %H:%M")],
         "Tên": [name],
+        "Lớp": [lop],
         "Điểm": [score]
     })
     if os.path.exists(FILE_NAME):
@@ -130,15 +130,23 @@ if "step" not in st.session_state:
     st.session_state.start_time = time.time()
 
 # ======================
-# 🚀 START
+# 🚀 START (THÊM Ô LỚP)
 # ======================
 if st.session_state.step == "start":
-    name = st.text_input("Nhập tên người chơi:")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        name = st.text_input("Nhập tên người chơi:")
+
+    with col2:
+        lop = st.text_input("Nhập lớp:")
+
     if st.button("BẮT ĐẦU"):
-        if len(name.strip()) < 3:
-            st.warning("Tên không hợp lệ")
+        if len(name.strip()) < 3 or len(lop.strip()) < 2:
+            st.warning("Nhập thiếu thông tin!")
         else:
             st.session_state.name = name
+            st.session_state.lop = lop
             st.session_state.step = "play"
             st.session_state.start_time = time.time()
             st.rerun()
@@ -152,7 +160,6 @@ elif st.session_state.step == "play":
     st.progress((st.session_state.q_index+1)/len(st.session_state.q_list))
     st.markdown(f"<div class='question'>{q['q']}</div>", unsafe_allow_html=True)
 
-    # MULTI
     if isinstance(q["c"], list):
         selected = []
         for choice in q["a"]:
@@ -166,8 +173,6 @@ elif st.session_state.step == "play":
                 st.session_state.score += 1
             else:
                 st.error(f"❌ Sai! Đáp án đúng: {', '.join(q['c'])}")
-
-    # SINGLE
     else:
         cols = st.columns(2)
         for i, choice in enumerate(q['a']):
@@ -179,7 +184,6 @@ elif st.session_state.step == "play":
                 else:
                     st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
 
-    # TIMER
     elapsed = int(time.time() - st.session_state.start_time)
     remaining = max(15 - elapsed, 0)
     st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
@@ -195,7 +199,7 @@ elif st.session_state.step == "play":
             st.session_state.start_time = time.time()
 
             if st.session_state.q_index >= len(st.session_state.q_list):
-                save_result(st.session_state.name, st.session_state.score)
+                save_result(st.session_state.name, st.session_state.lop, st.session_state.score)
                 st.session_state.step = "end"
 
             st.rerun()
@@ -207,6 +211,7 @@ elif st.session_state.step == "end":
     st.balloons()
     st.header("🎉 HOÀN THÀNH")
     st.write(f"Người chơi: {st.session_state.name}")
+    st.write(f"Lớp: {st.session_state.lop}")
     st.write(f"Điểm: {st.session_state.score}")
 
     if os.path.exists(FILE_NAME):
