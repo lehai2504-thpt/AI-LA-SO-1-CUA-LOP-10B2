@@ -8,7 +8,7 @@ import time
 FILE_NAME = "ket_qua_tro_choi.csv"
 
 # ======================
-# 📚 CÂU HỎI 1 ĐÁP ÁN
+# 📚 CÂU HỎI 1 ĐÁP ÁN (ĐỦ 8 CÂU)
 # ======================
 QUESTIONS_SINGLE = [
     {"q": "Thủ đô của Việt Nam là gì?",
@@ -38,10 +38,15 @@ QUESTIONS_SINGLE = [
     {"q": "Trái Đất là hành tinh lớn nhất?",
      "a": ["A. Đúng", "B. Sai", "C. Gần đúng", "D. Không xác định"],
      "c": "B. Sai"},
+
+    # ✅ CÂU MỚI BỔ SUNG
+    {"q": "Ngôn ngữ nào sau đây là ngôn ngữ lập trình bậc cao?",
+     "a": ["A. Python", "B. Assembly", "C. Machine Code", "D. Binary"],
+     "c": "A. Python"},
 ]
 
 # ======================
-# 📚 CÂU HỎI NHIỀU ĐÁP ÁN
+# 📚 CÂU HỎI NHIỀU ĐÁP ÁN (2 CÂU)
 # ======================
 QUESTIONS_MULTI = [
     {"q": "Ngôn ngữ lập trình nào là ngôn ngữ thông dịch?",
@@ -53,7 +58,7 @@ QUESTIONS_MULTI = [
      "c": ["A. Bàn phím", "B. Chuột"]},
 ]
 
-# 👉 GHÉP THEO THỨ TỰ: 1 ĐÁP ÁN → NHIỀU ĐÁP ÁN
+# 👉 GHÉP: 1 ĐÁP ÁN → NHIỀU ĐÁP ÁN
 QUESTIONS = random.sample(QUESTIONS_SINGLE, len(QUESTIONS_SINGLE)) + \
             random.sample(QUESTIONS_MULTI, len(QUESTIONS_MULTI))
 
@@ -121,7 +126,7 @@ elif st.session_state.step == "play":
     st.progress((st.session_state.q_index+1)/len(st.session_state.q_list))
     st.markdown(f"<div class='question'>{q['q']}</div>", unsafe_allow_html=True)
 
-    # 👉 MULTI
+    # MULTI
     if isinstance(q["c"], list):
         selected = []
         for choice in q["a"]:
@@ -136,7 +141,7 @@ elif st.session_state.step == "play":
             else:
                 st.error(f"❌ Sai! Đáp án đúng: {', '.join(q['c'])}")
 
-    # 👉 SINGLE
+    # SINGLE
     else:
         cols = st.columns(2)
         for i, choice in enumerate(q['a']):
@@ -148,9 +153,7 @@ elif st.session_state.step == "play":
                 else:
                     st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
 
-    # ======================
-    # ⏱️ TIMER
-    # ======================
+    # TIMER
     elapsed = int(time.time() - st.session_state.start_time)
     remaining = max(15 - elapsed, 0)
     st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
