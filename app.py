@@ -55,7 +55,7 @@ QUESTIONS_SINGLE = [
            "B. Nền trắng",
            "C. Công cụ vẽ",
            "D. Thư mục ảnh"],
-     "c": "A. Nơi lưu trữ nhóm đối tượng"},
+     "c": "A. Là một tấm ảnh trong suốt nằm chồng lên các tấm khác để tạo thành một bức ảnh hoàn chỉnh"},
 
     {"q": "Hướng tập trung vào một lớp dùng để làm gì?",
      "a": ["A. Phóng to lớp",
