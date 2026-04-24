@@ -88,7 +88,7 @@ QUESTIONS = random.sample(QUESTIONS_SINGLE, len(QUESTIONS_SINGLE)) + \
             random.sample(QUESTIONS_MULTI, len(QUESTIONS_MULTI))
 
 # ======================
-# 💾 LƯU (THÊM LỚP)
+# 💾 LƯU
 # ======================
 def save_result(name, lop, score):
     df_new = pd.DataFrame({
@@ -116,7 +116,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="title">💰 AI LÀ SỐ 1 CỦA LỚP 10B2</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">💰 AI LÀ SỐ 1 ? </div>', unsafe_allow_html=True)
 
 # ======================
 # 🔄 SESSION
@@ -130,7 +130,7 @@ if "step" not in st.session_state:
     st.session_state.start_time = time.time()
 
 # ======================
-# 🚀 START (THÊM Ô LỚP)
+# 🚀 START
 # ======================
 if st.session_state.step == "start":
     col1, col2 = st.columns(2)
@@ -184,8 +184,9 @@ elif st.session_state.step == "play":
                 else:
                     st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
 
+    # ⏱️ TIMER 10 GIÂY
     elapsed = int(time.time() - st.session_state.start_time)
-    remaining = max(15 - elapsed, 0)
+    remaining = max(10 - elapsed, 0)
     st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
 
     if remaining <= 0 and not st.session_state.answered:
