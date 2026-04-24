@@ -116,3 +116,29 @@ elif st.session_state.step == "end":
         for k in list(st.session_state.keys()):
             del st.session_state[k]
         st.rerun()
+
+# ==============================
+# 📂 QUẢN LÝ KẾT QUẢ (THÊM MỚI)
+# ==============================
+st.markdown("---")
+st.subheader("📂 Quản lý kết quả")
+
+col1, col2 = st.columns(2)
+
+# --- XEM KẾT QUẢ ---
+with col1:
+    if st.button("📊 XEM KẾT QUẢ"):
+        if os.path.exists(FILE_NAME):
+            df = pd.read_csv(FILE_NAME)
+            st.dataframe(df.sort_values(by="Điểm", ascending=False))
+        else:
+            st.warning("Chưa có dữ liệu!")
+
+# --- XÓA KẾT QUẢ ---
+with col2:
+    if st.button("🗑️ XÓA KẾT QUẢ"):
+        if os.path.exists(FILE_NAME):
+            os.remove(FILE_NAME)
+            st.success("Đã xóa toàn bộ kết quả!")
+        else:
+            st.warning("Không có file để xóa!")
