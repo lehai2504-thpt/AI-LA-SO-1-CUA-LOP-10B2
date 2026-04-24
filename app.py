@@ -106,7 +106,7 @@ def save_result(name, lop, score):
 # ======================
 # 🎨 UI
 # ======================
-st.set_page_config(page_title="Ai Là Triệu Phú", page_icon="💰")
+st.set_page_config(page_title="Ai Là Số 1?", page_icon="💰")
 
 st.markdown("""
 <style>
