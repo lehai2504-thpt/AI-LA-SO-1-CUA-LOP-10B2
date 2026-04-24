@@ -185,7 +185,7 @@ elif st.session_state.step == "play":
                     st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
 
     elapsed = int(time.time() - st.session_state.start_time)
-    remaining = max(15 - elapsed, 0)
+    remaining = max(10 - elapsed, 0)
     st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
 
     if remaining <= 0 and not st.session_state.answered:
