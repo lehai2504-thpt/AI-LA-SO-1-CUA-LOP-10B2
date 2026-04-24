@@ -8,9 +8,9 @@ import time
 FILE_NAME = "ket_qua_tro_choi.csv"
 
 # ======================
-# 📚 CÂU HỎI
+# 📚 CÂU HỎI 1 ĐÁP ÁN
 # ======================
-QUESTIONS = [
+QUESTIONS_SINGLE = [
     {"q": "Thủ đô của Việt Nam là gì?",
      "a": ["A. Hồ Chí Minh", "B. Đà Nẵng", "C. Hà Nội", "D. Hải Phòng"],
      "c": "C. Hà Nội"},
@@ -31,9 +31,6 @@ QUESTIONS = [
      "a": ["A. Ấn Độ Dương", "B. Đại Tây Dương", "C. Bắc Băng Dương", "D. Thái Bình Dương"],
      "c": "D. Thái Bình Dương"},
 
-    # ======================
-    # ✅ ĐÚNG/SAI
-    # ======================
     {"q": "Python là ngôn ngữ thông dịch?",
      "a": ["A. Đúng", "B. Sai", "C. Không biết", "D. Tùy trường hợp"],
      "c": "A. Đúng"},
@@ -41,11 +38,13 @@ QUESTIONS = [
     {"q": "Trái Đất là hành tinh lớn nhất?",
      "a": ["A. Đúng", "B. Sai", "C. Gần đúng", "D. Không xác định"],
      "c": "B. Sai"},
+]
 
-    # ======================
-    # ✅ NHIỀU ĐÁP ÁN ĐÚNG
-    # ======================
-    {"q": "Ngôn ngữ lập trình nào sau đây là ngôn ngữ thông dịch?",
+# ======================
+# 📚 CÂU HỎI NHIỀU ĐÁP ÁN
+# ======================
+QUESTIONS_MULTI = [
+    {"q": "Ngôn ngữ lập trình nào là ngôn ngữ thông dịch?",
      "a": ["A. Python", "B. Java", "C. C++", "D. JavaScript"],
      "c": ["A. Python", "D. JavaScript"]},
 
@@ -53,6 +52,10 @@ QUESTIONS = [
      "a": ["A. Bàn phím", "B. Chuột", "C. Màn hình", "D. Máy in"],
      "c": ["A. Bàn phím", "B. Chuột"]},
 ]
+
+# 👉 GHÉP THEO THỨ TỰ: 1 ĐÁP ÁN → NHIỀU ĐÁP ÁN
+QUESTIONS = random.sample(QUESTIONS_SINGLE, len(QUESTIONS_SINGLE)) + \
+            random.sample(QUESTIONS_MULTI, len(QUESTIONS_MULTI))
 
 # ======================
 # 💾 LƯU
@@ -89,7 +92,7 @@ st.markdown('<div class="title">💰 AI LÀ SỐ 1 CỦA LỚP 10B2</div>', unsa
 # ======================
 if "step" not in st.session_state:
     st.session_state.step = "start"
-    st.session_state.q_list = random.sample(QUESTIONS, len(QUESTIONS))
+    st.session_state.q_list = QUESTIONS
     st.session_state.q_index = 0
     st.session_state.score = 0
     st.session_state.answered = False
@@ -118,11 +121,8 @@ elif st.session_state.step == "play":
     st.progress((st.session_state.q_index+1)/len(st.session_state.q_list))
     st.markdown(f"<div class='question'>{q['q']}</div>", unsafe_allow_html=True)
 
-    # ======================
-    # 👉 PHÂN LOẠI CÂU HỎI
-    # ======================
+    # 👉 MULTI
     if isinstance(q["c"], list):
-        # ---- nhiều đáp án đúng ----
         selected = []
         for choice in q["a"]:
             if st.checkbox(choice, key=f"{choice}_{st.session_state.q_index}"):
@@ -130,15 +130,14 @@ elif st.session_state.step == "play":
 
         if st.button("XÁC NHẬN"):
             st.session_state.answered = True
-
             if set(selected) == set(q["c"]):
                 st.success("✔ Chính xác!")
                 st.session_state.score += 1
             else:
                 st.error(f"❌ Sai! Đáp án đúng: {', '.join(q['c'])}")
 
+    # 👉 SINGLE
     else:
-        # ---- 1 đáp án ----
         cols = st.columns(2)
         for i, choice in enumerate(q['a']):
             if cols[i % 2].button(choice, key=f"{choice}_{st.session_state.q_index}") and not st.session_state.answered:
@@ -154,7 +153,6 @@ elif st.session_state.step == "play":
     # ======================
     elapsed = int(time.time() - st.session_state.start_time)
     remaining = max(15 - elapsed, 0)
-
     st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
 
     if remaining <= 0 and not st.session_state.answered:
