@@ -88,7 +88,7 @@ QUESTIONS = random.sample(QUESTIONS_SINGLE, len(QUESTIONS_SINGLE)) + \
             random.sample(QUESTIONS_MULTI, len(QUESTIONS_MULTI))
 
 # ======================
-# 💾 LƯU (THÊM LỚP)
+# 💾 LƯU
 # ======================
 def save_result(name, lop, score):
     df_new = pd.DataFrame({
@@ -130,7 +130,7 @@ if "step" not in st.session_state:
     st.session_state.start_time = time.time()
 
 # ======================
-# 🚀 START (THÊM Ô LỚP)
+# 🚀 START (THÊM MẬT KHẨU)
 # ======================
 if st.session_state.step == "start":
     col1, col2 = st.columns(2)
@@ -141,9 +141,13 @@ if st.session_state.step == "start":
     with col2:
         lop = st.text_input("Nhập lớp:")
 
+    password = st.text_input("🔐 Nhập mật khẩu để bắt đầu:", type="password")
+
     if st.button("BẮT ĐẦU"):
         if len(name.strip()) < 3 or len(lop.strip()) < 2:
             st.warning("Nhập thiếu thông tin!")
+        elif password != "batdau":
+            st.error("❌ Sai mật khẩu!")
         else:
             st.session_state.name = name
             st.session_state.lop = lop
@@ -152,7 +156,7 @@ if st.session_state.step == "start":
             st.rerun()
 
 # ======================
-# 🎮 GAME
+# 🎮 GAME (GIỮ NGUYÊN)
 # ======================
 elif st.session_state.step == "play":
     q = st.session_state.q_list[st.session_state.q_index]
