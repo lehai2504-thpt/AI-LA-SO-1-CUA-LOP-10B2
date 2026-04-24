@@ -112,4 +112,4 @@ elif st.session_state.step == "end":
         st.subheader("🏆 BXH")
         st.dataframe(df.sort_values(by="Điểm", ascending=False).head(10))
 
-    if st.button("CHƠI LẠI
+    if st.button("CHƠI LẠI")
