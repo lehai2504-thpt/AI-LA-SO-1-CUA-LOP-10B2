@@ -51,7 +51,7 @@ QUESTIONS_SINGLE = [
      "c": "A. Nút mũi tên lên/xuống"},
 
     {"q": "Lớp ảnh là gì?",
-     "a": ["A. Nơi lưu trữ nhóm đối tượng",
+     "a": ["A. Là một tấm ảnh trong suốt nằm chồng lên các tấm khác để tạo thành một bức ảnh hoàn chỉnh",
            "B. Nền trắng",
            "C. Công cụ vẽ",
            "D. Thư mục ảnh"],
