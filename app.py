@@ -40,7 +40,7 @@ body {background-color: #000814; color: white;}
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="title">💰 AI LÀ TRIỆU PHÚ</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">💰 AI LÀ SỐ 1 CỦA LỚP 10B2</div>', unsafe_allow_html=True)
 
 # --- SESSION ---
 if "step" not in st.session_state:
