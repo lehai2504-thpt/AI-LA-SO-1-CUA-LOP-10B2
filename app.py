@@ -7,39 +7,56 @@ import time
 
 FILE_NAME = "ket_qua_tro_choi.csv"
 
+# ======================
+# 📚 CÂU HỎI
+# ======================
 QUESTIONS = [
-    {"q": "Thủ đô của Việt Nam là gì?", "a": ["A. Hồ Chí Minh", "B. Đà Nẵng", "C. Hà Nội", "D. Hải Phòng"], "c": "C. Hà Nội"},
-    {"q": "Số nào là số nguyên tố?", "a": ["A. 4", "B. 6", "C. 9", "D. 7"], "c": "D. 7"},
-    {"q": "Hành tinh gần Mặt trời nhất?", "a": ["A. Sao Kim", "B. Sao Thủy", "C. Sao Hỏa", "D. Trái Đất"], "c": "B. Sao Thủy"},
-    {"q": "Tác giả Truyện Kiều?", "a": ["A. Nguyễn Khuyến", "B. Nguyễn Du", "C. Phan Bội Châu", "D. Hồ Xuân Hương"], "c": "B. Nguyễn Du"},
-    {"q": "Đại dương lớn nhất?", "a": ["A. Ấn Độ Dương", "B. Đại Tây Dương", "C. Bắc Băng Dương", "D. Thái Bình Dương"], "c": "D. Thái Bình Dương"},
+    {"q": "Thủ đô của Việt Nam là gì?",
+     "a": ["A. Hồ Chí Minh", "B. Đà Nẵng", "C. Hà Nội", "D. Hải Phòng"],
+     "c": "C. Hà Nội"},
 
-    # --- CÂU ĐÚNG/SAI 1 ---
-    {
-        "q": "Trong các phát biểu sau, đâu là phát biểu ĐÚNG?",
-        "a": [
-            "A. Python là ngôn ngữ lập trình bậc thấp",
-            "B. Trái Đất có 2 Mặt Trăng",
-            "C. Nước sôi ở 100°C (điều kiện thường)",
-            "D. Con người không cần oxy để sống"
-        ],
-        "c": "C. Nước sôi ở 100°C (điều kiện thường)"
-    },
+    {"q": "Số nào là số nguyên tố?",
+     "a": ["A. 4", "B. 6", "C. 9", "D. 7"],
+     "c": "D. 7"},
 
-    # --- CÂU ĐÚNG/SAI 2 ---
-    {
-        "q": "Trong các phát biểu sau, đâu là phát biểu SAI?",
-        "a": [
-            "A. 1 giờ = 60 phút",
-            "B. Cá voi là động vật có vú",
-            "C. Ánh sáng truyền chậm hơn âm thanh",
-            "D. Con người có 5 giác quan cơ bản"
-        ],
-        "c": "C. Ánh sáng truyền chậm hơn âm thanh"
-    },
+    {"q": "Hành tinh gần Mặt trời nhất?",
+     "a": ["A. Sao Kim", "B. Sao Thủy", "C. Sao Hỏa", "D. Trái Đất"],
+     "c": "B. Sao Thủy"},
+
+    {"q": "Tác giả Truyện Kiều?",
+     "a": ["A. Nguyễn Khuyến", "B. Nguyễn Du", "C. Phan Bội Châu", "D. Hồ Xuân Hương"],
+     "c": "B. Nguyễn Du"},
+
+    {"q": "Đại dương lớn nhất?",
+     "a": ["A. Ấn Độ Dương", "B. Đại Tây Dương", "C. Bắc Băng Dương", "D. Thái Bình Dương"],
+     "c": "D. Thái Bình Dương"},
+
+    # ======================
+    # ✅ ĐÚNG/SAI
+    # ======================
+    {"q": "Python là ngôn ngữ thông dịch?",
+     "a": ["A. Đúng", "B. Sai", "C. Không biết", "D. Tùy trường hợp"],
+     "c": "A. Đúng"},
+
+    {"q": "Trái Đất là hành tinh lớn nhất?",
+     "a": ["A. Đúng", "B. Sai", "C. Gần đúng", "D. Không xác định"],
+     "c": "B. Sai"},
+
+    # ======================
+    # ✅ NHIỀU ĐÁP ÁN ĐÚNG
+    # ======================
+    {"q": "Ngôn ngữ lập trình nào sau đây là ngôn ngữ thông dịch?",
+     "a": ["A. Python", "B. Java", "C. C++", "D. JavaScript"],
+     "c": ["A. Python", "D. JavaScript"]},
+
+    {"q": "Thiết bị nào là thiết bị nhập?",
+     "a": ["A. Bàn phím", "B. Chuột", "C. Màn hình", "D. Máy in"],
+     "c": ["A. Bàn phím", "B. Chuột"]},
 ]
 
-# --- LƯU ---
+# ======================
+# 💾 LƯU
+# ======================
 def save_result(name, score):
     df_new = pd.DataFrame({
         "Thời gian": [datetime.datetime.now().strftime("%d/%m/%Y %H:%M")],
@@ -52,21 +69,24 @@ def save_result(name, score):
         df = df_new
     df.to_csv(FILE_NAME, index=False)
 
-# --- UI ---
+# ======================
+# 🎨 UI
+# ======================
 st.set_page_config(page_title="Ai Là Triệu Phú", page_icon="💰")
 
 st.markdown("""
 <style>
-body {background-color: #000814; color: white;}
 .title {text-align:center; font-size:40px; color: gold; font-weight:bold;}
 .question {font-size:26px; margin:20px 0;}
-.answer-btn button {width:100%; border-radius:15px; height:60px; font-size:18px;}
+.timer {font-size:22px; color: cyan;}
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="title">💰 AI LÀ SỐ 1 CỦA LỚP 10B2</div>', unsafe_allow_html=True)
 
-# --- SESSION ---
+# ======================
+# 🔄 SESSION
+# ======================
 if "step" not in st.session_state:
     st.session_state.step = "start"
     st.session_state.q_list = random.sample(QUESTIONS, len(QUESTIONS))
@@ -75,7 +95,9 @@ if "step" not in st.session_state:
     st.session_state.answered = False
     st.session_state.start_time = time.time()
 
-# --- START ---
+# ======================
+# 🚀 START
+# ======================
 if st.session_state.step == "start":
     name = st.text_input("Nhập tên người chơi:")
     if st.button("BẮT ĐẦU"):
@@ -84,33 +106,59 @@ if st.session_state.step == "start":
         else:
             st.session_state.name = name
             st.session_state.step = "play"
+            st.session_state.start_time = time.time()
             st.rerun()
 
-# --- GAME ---
+# ======================
+# 🎮 GAME
+# ======================
 elif st.session_state.step == "play":
     q = st.session_state.q_list[st.session_state.q_index]
-    st.progress((st.session_state.q_index+1)/len(st.session_state.q_list))
 
+    st.progress((st.session_state.q_index+1)/len(st.session_state.q_list))
     st.markdown(f"<div class='question'>{q['q']}</div>", unsafe_allow_html=True)
 
-    cols = st.columns(2)
-    choices = q['a']
+    # ======================
+    # 👉 PHÂN LOẠI CÂU HỎI
+    # ======================
+    if isinstance(q["c"], list):
+        # ---- nhiều đáp án đúng ----
+        selected = []
+        for choice in q["a"]:
+            if st.checkbox(choice, key=f"{choice}_{st.session_state.q_index}"):
+                selected.append(choice)
 
-    for i, choice in enumerate(choices):
-        if cols[i%2].button(choice, key=choice) and not st.session_state.answered:
+        if st.button("XÁC NHẬN"):
             st.session_state.answered = True
-            if choice == q['c']:
+
+            if set(selected) == set(q["c"]):
                 st.success("✔ Chính xác!")
                 st.session_state.score += 1
             else:
-                st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
+                st.error(f"❌ Sai! Đáp án đúng: {', '.join(q['c'])}")
 
-    # TIMER
-    t = 15 - int(time.time() - st.session_state.start_time)
-    st.write(f"⏱️ {max(t,0)} giây")
+    else:
+        # ---- 1 đáp án ----
+        cols = st.columns(2)
+        for i, choice in enumerate(q['a']):
+            if cols[i % 2].button(choice, key=f"{choice}_{st.session_state.q_index}") and not st.session_state.answered:
+                st.session_state.answered = True
+                if choice == q['c']:
+                    st.success("✔ Chính xác!")
+                    st.session_state.score += 1
+                else:
+                    st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
 
-    if t <= 0 and not st.session_state.answered:
-        st.error("Hết giờ!")
+    # ======================
+    # ⏱️ TIMER
+    # ======================
+    elapsed = int(time.time() - st.session_state.start_time)
+    remaining = max(15 - elapsed, 0)
+
+    st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
+
+    if remaining <= 0 and not st.session_state.answered:
+        st.error("⏰ Hết giờ!")
         st.session_state.answered = True
 
     if st.session_state.answered:
@@ -122,9 +170,12 @@ elif st.session_state.step == "play":
             if st.session_state.q_index >= len(st.session_state.q_list):
                 save_result(st.session_state.name, st.session_state.score)
                 st.session_state.step = "end"
+
             st.rerun()
 
-# --- END ---
+# ======================
+# 🏁 END
+# ======================
 elif st.session_state.step == "end":
     st.balloons()
     st.header("🎉 HOÀN THÀNH")
@@ -141,15 +192,14 @@ elif st.session_state.step == "end":
             del st.session_state[k]
         st.rerun()
 
-# ==============================
-# 📂 QUẢN LÝ KẾT QUẢ
-# ==============================
+# ======================
+# 📂 QUẢN LÝ
+# ======================
 st.markdown("---")
 st.subheader("📂 Quản lý kết quả")
 
 col1, col2 = st.columns(2)
 
-# --- XEM KẾT QUẢ ---
 with col1:
     if st.button("📊 XEM KẾT QUẢ"):
         if os.path.exists(FILE_NAME):
@@ -158,17 +208,16 @@ with col1:
         else:
             st.warning("Chưa có dữ liệu!")
 
-# --- XÓA KẾT QUẢ (CÓ MẬT KHẨU) ---
 with col2:
     st.write("🗑️ XÓA KẾT QUẢ")
-    password = st.text_input("Nhập mật khẩu để xóa:", type="password", key="del_pass")
+    password = st.text_input("Nhập mật khẩu:", type="password")
 
     if st.button("XÁC NHẬN XÓA"):
         if password == "2504":
             if os.path.exists(FILE_NAME):
                 os.remove(FILE_NAME)
-                st.success("✅ Đã xóa toàn bộ kết quả!")
+                st.success("✅ Đã xóa!")
             else:
-                st.warning("Không có file để xóa!")
+                st.warning("Không có file!")
         else:
             st.error("❌ Sai mật khẩu!")
