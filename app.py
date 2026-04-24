@@ -8,7 +8,7 @@ import time
 FILE_NAME = "ket_qua_tro_choi.csv"
 
 # ======================
-# 📚 CÂU HỎI 1 ĐÁP ÁN (8 CÂU)
+# 📚 CÂU HỎI
 # ======================
 QUESTIONS_SINGLE = [
     {"q": "Khi thiết kế một đối tượng đồ họa phức tạp, tại sao ta nên đặt mỗi thành phần trên một lớp ảnh riêng biệt?",
@@ -65,9 +65,6 @@ QUESTIONS_SINGLE = [
      "c": "B. Ẩn lớp khác để dễ thao tác"},
 ]
 
-# ======================
-# 📚 CÂU HỎI NHIỀU ĐÁP ÁN (2 CÂU)
-# ======================
 QUESTIONS_MULTI = [
     {"q": "Ban giám hiệu trường Nguyễn Trãi xã Bờ Y hiện tại gồm?",
      "a": ["A. Phạm Đại Cảnh",
@@ -88,7 +85,7 @@ QUESTIONS = random.sample(QUESTIONS_SINGLE, len(QUESTIONS_SINGLE)) + \
             random.sample(QUESTIONS_MULTI, len(QUESTIONS_MULTI))
 
 # ======================
-# 💾 LƯU
+# 💾 SAVE
 # ======================
 def save_result(name, lop, score):
     df_new = pd.DataFrame({
@@ -104,22 +101,12 @@ def save_result(name, lop, score):
     df.to_csv(FILE_NAME, index=False)
 
 # ======================
-# 🎨 UI
+# UI
 # ======================
 st.set_page_config(page_title="Ai Là Triệu Phú", page_icon="💰")
 
-st.markdown("""
-<style>
-.title {text-align:center; font-size:40px; color: gold; font-weight:bold;}
-.question {font-size:26px; margin:20px 0;}
-.timer {font-size:22px; color: cyan;}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown('<div class="title">💰 AI LÀ SỐ 1 ? </div>', unsafe_allow_html=True)
-
 # ======================
-# 🔄 SESSION
+# SESSION
 # ======================
 if "step" not in st.session_state:
     st.session_state.step = "start"
@@ -130,21 +117,17 @@ if "step" not in st.session_state:
     st.session_state.start_time = time.time()
 
 # ======================
-# 🚀 START
+# START
 # ======================
 if st.session_state.step == "start":
     col1, col2 = st.columns(2)
-
     with col1:
-        name = st.text_input("Nhập tên người chơi:")
-
+        name = st.text_input("Nhập tên:")
     with col2:
         lop = st.text_input("Nhập lớp:")
 
     if st.button("BẮT ĐẦU"):
-        if len(name.strip()) < 3 or len(lop.strip()) < 2:
-            st.warning("Nhập thiếu thông tin!")
-        else:
+        if name and lop:
             st.session_state.name = name
             st.session_state.lop = lop
             st.session_state.step = "play"
@@ -152,47 +135,59 @@ if st.session_state.step == "start":
             st.rerun()
 
 # ======================
-# 🎮 GAME
+# GAME
 # ======================
 elif st.session_state.step == "play":
     q = st.session_state.q_list[st.session_state.q_index]
 
-    st.progress((st.session_state.q_index+1)/len(st.session_state.q_list))
-    st.markdown(f"<div class='question'>{q['q']}</div>", unsafe_allow_html=True)
+    # TIMER
+    elapsed = int(time.time() - st.session_state.start_time)
+    remaining = max(10 - elapsed, 0)
+    time_up = remaining <= 0
 
+    st.write(f"⏱️ {remaining} giây")
+
+    # ======================
+    # MULTI
+    # ======================
     if isinstance(q["c"], list):
         selected = []
         for choice in q["a"]:
-            if st.checkbox(choice, key=f"{choice}_{st.session_state.q_index}"):
+            if st.checkbox(choice, disabled=time_up):
                 selected.append(choice)
 
-        if st.button("XÁC NHẬN"):
+        if st.button("XÁC NHẬN", disabled=time_up):
             st.session_state.answered = True
             if set(selected) == set(q["c"]):
-                st.success("✔ Chính xác!")
                 st.session_state.score += 1
+                st.success("✔ Đúng")
             else:
-                st.error(f"❌ Sai! Đáp án đúng: {', '.join(q['c'])}")
+                st.error("❌ Sai")
+
+    # ======================
+    # SINGLE (ĐÃ FIX)
+    # ======================
     else:
         cols = st.columns(2)
         for i, choice in enumerate(q['a']):
-            if cols[i % 2].button(choice, key=f"{choice}_{st.session_state.q_index}") and not st.session_state.answered:
+            if cols[i % 2].button(choice, disabled=time_up) and not st.session_state.answered:
                 st.session_state.answered = True
                 if choice == q['c']:
-                    st.success("✔ Chính xác!")
                     st.session_state.score += 1
+                    st.success("✔ Đúng")
                 else:
-                    st.error(f"❌ Sai! Đáp án đúng: {q['c']}")
+                    st.error("❌ Sai")
 
-    # ⏱️ TIMER 10 GIÂY
-    elapsed = int(time.time() - st.session_state.start_time)
-    remaining = max(10 - elapsed, 0)
-    st.markdown(f"<div class='timer'>⏱️ {remaining} giây</div>", unsafe_allow_html=True)
-
-    if remaining <= 0 and not st.session_state.answered:
+    # HẾT GIỜ
+    if time_up and not st.session_state.answered:
         st.error("⏰ Hết giờ!")
         st.session_state.answered = True
 
+    # AUTO REFRESH
+    time.sleep(1)
+    st.rerun()
+
+    # NEXT
     if st.session_state.answered:
         if st.button("TIẾP TỤC"):
             st.session_state.q_index += 1
@@ -206,51 +201,8 @@ elif st.session_state.step == "play":
             st.rerun()
 
 # ======================
-# 🏁 END
+# END
 # ======================
 elif st.session_state.step == "end":
-    st.balloons()
-    st.header("🎉 HOÀN THÀNH")
-    st.write(f"Người chơi: {st.session_state.name}")
-    st.write(f"Lớp: {st.session_state.lop}")
-    st.write(f"Điểm: {st.session_state.score}")
-
-    if os.path.exists(FILE_NAME):
-        df = pd.read_csv(FILE_NAME)
-        st.subheader("🏆 BXH")
-        st.dataframe(df.sort_values(by="Điểm", ascending=False).head(10))
-
-    if st.button("CHƠI LẠI"):
-        for k in list(st.session_state.keys()):
-            del st.session_state[k]
-        st.rerun()
-
-# ======================
-# 📂 QUẢN LÝ
-# ======================
-st.markdown("---")
-st.subheader("📂 Quản lý kết quả")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("📊 XEM KẾT QUẢ"):
-        if os.path.exists(FILE_NAME):
-            df = pd.read_csv(FILE_NAME)
-            st.dataframe(df.sort_values(by="Điểm", ascending=False))
-        else:
-            st.warning("Chưa có dữ liệu!")
-
-with col2:
-    st.write("🗑️ XÓA KẾT QUẢ")
-    password = st.text_input("Nhập mật khẩu:", type="password")
-
-    if st.button("XÁC NHẬN XÓA"):
-        if password == "2504":
-            if os.path.exists(FILE_NAME):
-                os.remove(FILE_NAME)
-                st.success("✅ Đã xóa!")
-            else:
-                st.warning("Không có file!")
-        else:
-            st.error("❌ Sai mật khẩu!")
+    st.write("🎉 Hoàn thành")
+    st.write(st.session_state.score)
