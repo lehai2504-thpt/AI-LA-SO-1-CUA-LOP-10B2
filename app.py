@@ -8,54 +8,80 @@ import time
 FILE_NAME = "ket_qua_tro_choi.csv"
 
 # ======================
-# 📚 CÂU HỎI 1 ĐÁP ÁN (ĐỦ 8 CÂU)
+# 📚 CÂU HỎI 1 ĐÁP ÁN (8 CÂU)
 # ======================
 QUESTIONS_SINGLE = [
-    {"q": "Thủ đô của Việt Nam là gì?",
-     "a": ["A. Hồ Chí Minh", "B. Đà Nẵng", "C. Hà Nội", "D. Hải Phòng"],
-     "c": "C. Hà Nội"},
+    {"q": "Khi thiết kế một đối tượng đồ họa phức tạp, tại sao ta nên đặt mỗi thành phần trên một lớp ảnh riêng biệt?",
+     "a": ["A. Để làm cho dung lượng tệp nhỏ hơn",
+           "B. Để phần mềm tự phối màu",
+           "C. Để dễ dàng chỉnh sửa riêng từng đối tượng",
+           "D. Để tất cả luôn hiển thị cùng lúc"],
+     "c": "C. Để dễ dàng chỉnh sửa riêng từng đối tượng"},
 
-    {"q": "Số nào là số nguyên tố?",
-     "a": ["A. 4", "B. 6", "C. 9", "D. 7"],
-     "c": "D. 7"},
+    {"q": "GIMP cung cấp các lệnh cơ bản nào để làm việc với lớp ảnh?",
+     "a": ["A. Vẽ, tô màu, tẩy",
+           "B. Thêm, xoá, nhân đôi, ẩn/hiện, đổi thứ tự",
+           "C. Chỉ tạo và xoá lớp",
+           "D. Thay đổi font chữ"],
+     "c": "B. Thêm, xoá, nhân đôi, ẩn/hiện, đổi thứ tự"},
 
-    {"q": "Hành tinh gần Mặt trời nhất?",
-     "a": ["A. Sao Kim", "B. Sao Thủy", "C. Sao Hỏa", "D. Trái Đất"],
-     "c": "B. Sao Thủy"},
+    {"q": "Để ẩn/hiện lớp ảnh trong GIMP, nhấn biểu tượng nào?",
+     "a": ["A. Cái kéo", "B. Dấu +", "C. Thùng rác", "D. Con mắt"],
+     "c": "D. Con mắt"},
 
-    {"q": "Tác giả Truyện Kiều?",
-     "a": ["A. Nguyễn Khuyến", "B. Nguyễn Du", "C. Phan Bội Châu", "D. Hồ Xuân Hương"],
-     "c": "B. Nguyễn Du"},
+    {"q": "Thay đổi thứ tự lớp ảnh sẽ dẫn đến điều gì?",
+     "a": ["A. Thay đổi kích thước",
+           "B. Thay đổi màu sắc",
+           "C. Thay đổi hiển thị, lớp trên che lớp dưới",
+           "D. Làm đối tượng biến mất"],
+     "c": "C. Thay đổi hiển thị, lớp trên che lớp dưới"},
 
-    {"q": "Đại dương lớn nhất?",
-     "a": ["A. Ấn Độ Dương", "B. Đại Tây Dương", "C. Bắc Băng Dương", "D. Thái Bình Dương"],
-     "c": "D. Thái Bình Dương"},
+    {"q": "Lớp bóng đổ nên đặt ở đâu?",
+     "a": ["A. Trên lớp chữ",
+           "B. Dưới lớp chữ",
+           "C. Dưới nền",
+           "D. Ở file khác"],
+     "c": "B. Dưới lớp chữ"},
 
-    {"q": "Python là ngôn ngữ thông dịch?",
-     "a": ["A. Đúng", "B. Sai", "C. Không biết", "D. Tùy trường hợp"],
-     "c": "A. Đúng"},
+    {"q": "Thao tác nào giúp di chuyển lớp?",
+     "a": ["A. Nút mũi tên lên/xuống",
+           "B. Nháy đúp chuột",
+           "C. Delete",
+           "D. Dùng Text tool"],
+     "c": "A. Nút mũi tên lên/xuống"},
 
-    {"q": "Trái Đất là hành tinh lớn nhất?",
-     "a": ["A. Đúng", "B. Sai", "C. Gần đúng", "D. Không xác định"],
-     "c": "B. Sai"},
+    {"q": "Lớp ảnh là gì?",
+     "a": ["A. Nơi lưu trữ nhóm đối tượng",
+           "B. Nền trắng",
+           "C. Công cụ vẽ",
+           "D. Thư mục ảnh"],
+     "c": "A. Nơi lưu trữ nhóm đối tượng"},
 
-    # ✅ CÂU MỚI BỔ SUNG
-    {"q": "Ngôn ngữ nào sau đây là ngôn ngữ lập trình bậc cao?",
-     "a": ["A. Python", "B. Assembly", "C. Machine Code", "D. Binary"],
-     "c": "A. Python"},
+    {"q": "Hướng tập trung vào một lớp dùng để làm gì?",
+     "a": ["A. Phóng to lớp",
+           "B. Ẩn lớp khác để dễ thao tác",
+           "C. Gộp lớp",
+           "D. Căn giữa"],
+     "c": "B. Ẩn lớp khác để dễ thao tác"},
 ]
 
 # ======================
 # 📚 CÂU HỎI NHIỀU ĐÁP ÁN (2 CÂU)
 # ======================
 QUESTIONS_MULTI = [
-    {"q": "Ngôn ngữ lập trình nào là ngôn ngữ thông dịch?",
-     "a": ["A. Python", "B. Java", "C. C++", "D. JavaScript"],
-     "c": ["A. Python", "D. JavaScript"]},
+    {"q": "Ban giám hiệu trường Nguyễn Trãi xã Bờ Y hiện tại gồm?",
+     "a": ["A. Phạm Đại Cảnh",
+           "B. Lê Cao Nguyên",
+           "C. Nguyễn Tiến Định",
+           "D. Hồ Trung Cang"],
+     "c": ["A. Phạm Đại Cảnh", "B. Lê Cao Nguyên", "D. Hồ Trung Cang"]},
 
-    {"q": "Thiết bị nào là thiết bị nhập?",
-     "a": ["A. Bàn phím", "B. Chuột", "C. Màn hình", "D. Máy in"],
-     "c": ["A. Bàn phím", "B. Chuột"]},
+    {"q": "Thông tin ĐÚNG về trường Nguyễn Trãi xã Bờ Y là?",
+     "a": ["A. Hình thành năm 2004",
+           "B. Hình thành năm 2005",
+           "C. Đc: 49 Phan Bội Châu",
+           "D. Đc: 59 Phan Bội Châu"],
+     "c": ["A. Hình thành năm 2004", "C. Đc: 49 Phan Bội Châu"]},
 ]
 
 # 👉 GHÉP: 1 ĐÁP ÁN → NHIỀU ĐÁP ÁN
