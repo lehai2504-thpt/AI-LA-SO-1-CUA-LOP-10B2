@@ -118,7 +118,7 @@ elif st.session_state.step == "end":
         st.rerun()
 
 # ==============================
-# 📂 QUẢN LÝ KẾT QUẢ (THÊM MỚI)
+# 📂 QUẢN LÝ KẾT QUẢ
 # ==============================
 st.markdown("---")
 st.subheader("📂 Quản lý kết quả")
@@ -134,11 +134,17 @@ with col1:
         else:
             st.warning("Chưa có dữ liệu!")
 
-# --- XÓA KẾT QUẢ ---
+# --- XÓA KẾT QUẢ (CÓ MẬT KHẨU) ---
 with col2:
-    if st.button("🗑️ XÓA KẾT QUẢ"):
-        if os.path.exists(FILE_NAME):
-            os.remove(FILE_NAME)
-            st.success("Đã xóa toàn bộ kết quả!")
+    st.write("🗑️ XÓA KẾT QUẢ")
+    password = st.text_input("Nhập mật khẩu để xóa:", type="password", key="del_pass")
+
+    if st.button("XÁC NHẬN XÓA"):
+        if password == "2504":
+            if os.path.exists(FILE_NAME):
+                os.remove(FILE_NAME)
+                st.success("✅ Đã xóa toàn bộ kết quả!")
+            else:
+                st.warning("Không có file để xóa!")
         else:
-            st.warning("Không có file để xóa!")
+            st.error("❌ Sai mật khẩu!")
