@@ -116,7 +116,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="title">💰 AI LÀ SỐ 1 CỦA LỚP 10B2</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">💰 AI LÀ SỐ 1 ? </div>', unsafe_allow_html=True)
 
 # ======================
 # 🔄 SESSION
